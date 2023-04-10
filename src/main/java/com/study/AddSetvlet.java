@@ -8,16 +8,16 @@ import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 
 /**
- * Servlet implementation class ListServlet
+ * Servlet implementation class AddSetvlet
  */
-@WebServlet("/list")
-public class ListServlet extends HttpServlet {
+@WebServlet("/add")
+public class AddSetvlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListServlet() {
+    public AddSetvlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,23 +29,11 @@ public class ListServlet extends HttpServlet {
 		//1. request param
 		
 		//2. business logic
-		HttpSession session = request.getSession();
-		Object o = session.getAttribute("db");
-		
-		if(o == null) {
-			o = new ArrayList<String>();
-			session.setAttribute("db", o);
-		}
-		//의미있게 안봐도 된다
 		
 		//3. add attribute
-		request.setAttribute("list", o);
-		
-		//잘 동작하는지 보기위한 코드
-//		request.setAttribute("list", List.of("태웅", "백호", "대만", "태섭"));
 		
 		//4. forward / redirect
-		String view = "/WEB-INF/views/list.jsp";
+		String view = "/WEB-INF/views/add.jsp";
 		request.getRequestDispatcher(view).forward(request, response);
 	}
 
@@ -53,8 +41,19 @@ public class ListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		//1. request param
+		String name = request.getParameter("name");
+		
+		//2. business logic
+		HttpSession session = request.getSession();
+		List<String> list = (List<String>) session.getAttribute("db");
+ 		list.add(name);
+		
+		//3. add attribute
+		
+		//4. forward / redirect
+		String location = request.getContextPath() + "/list";
+		response.sendRedirect(location);
 	}
 
 }
