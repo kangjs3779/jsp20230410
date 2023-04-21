@@ -1,9 +1,8 @@
 package com.study;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.List;
 
-import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 
